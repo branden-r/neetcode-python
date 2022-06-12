@@ -1,19 +1,22 @@
 # noinspection PyPep8Naming
-# create a mapping from each unique character in the string to the number of times it occurs
-def charCount(s: str) -> dict[str, int]:
-    r: dict[str, int] = {}
-    c: str
-    for c in s:
-        if c not in r:
-            r[c] = 1
-        else:
-            r[c] += 1
-    return r
-
-
-# noinspection PyPep8Naming
 class Solution:
-    # if the two strings have an equal mapping, they are anagrams
+    # if the strings are of different lengths, they cannot be anagrams
+    # if they are of the same length, we need to think about it
+    #
+    # create a mapping from character to integer
+    # the integer starts at zero
+    # every time a character appears in s, increment the corresponding integer
+    # every time a character appears in t, decrement the corresponding integer
+    # if they are anagrams, then every mapped value will be a zero
     @staticmethod
     def isAnagram(s: str, t: str) -> bool:
-        return charCount(s) == charCount(t)
+        if len(s) != len(t):
+            return False
+        ct: dict[str, int] = {}
+        c1: str
+        c2: str
+        for c1, c2 in zip(s, t):
+            ct[c1] = ct.get(c1, 0) + 1
+            ct[c2] = ct.get(c2, 0) - 1
+        v: int
+        return all(v == 0 for v in ct.values())
