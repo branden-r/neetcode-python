@@ -9,9 +9,9 @@ class Solution:
     def twoSum(nums: list[int], target: int) -> tuple[int, int]:
         num_to_idx: dict[int, int] = {nums[0]: 0}
         i: int
-        num: int
-        for i, num in enumerate(nums[1:], 1):
-            partner: int = target - num
+        n: int
+        for i, n in enumerate(nums[1:], 1):
+            partner: int = target - n
             if partner in num_to_idx:
                 return i, num_to_idx[partner]
-            num_to_idx[num] = i
+            num_to_idx[n] = i
