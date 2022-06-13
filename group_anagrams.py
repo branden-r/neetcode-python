@@ -1,3 +1,4 @@
+from collections import defaultdict
 from itertools import groupby
 
 
@@ -21,10 +22,10 @@ def string_key(string: str) -> str:
 # the mapping is implemented with a dictionary, which is unhashable because it is mutable
 # to fix this, convert the items in the dictionary to a frozen set, which is hashable because it is immutable
 def cold_key(string: str) -> frozenset[tuple[str, int]]:
-    char_counts: dict[str, int] = {}
+    char_counts: dict[str, int] = defaultdict(lambda: 0)
     char: str
     for char in string:
-        char_counts[char] = char_counts.get(char, 0) + 1
+        char_counts[char] += 1
     return frozenset(char_counts.items())
 
 
@@ -35,12 +36,10 @@ class Solution:
     # return a list of lists of anagrams
     @staticmethod
     def groupAnagrams(strings: list[str]) -> list[list[str]]:
-        key_to_group: dict[frozenset[tuple[str, int]], list[str]] = {}
+        key_to_group: dict[frozenset[tuple[str, int]], list[str]] = defaultdict(list)
         string: str
         for string in strings:
-            key: frozenset[tuple[str, int]] = cold_key(string)
-            key_to_group[key] = key_to_group.get(key, [])
-            key_to_group[key].append(string)
+            key_to_group[cold_key(string)].append(string)
         return list(key_to_group.values())
 
     # sort the strings by their sorted representation
