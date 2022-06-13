@@ -15,3 +15,4 @@ class Solution:
             if partner in num_to_idx:
                 return i, num_to_idx[partner]
             num_to_idx[n] = i
+        return -1, -1
